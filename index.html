@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Byjus</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<style>
+	
+</style>
+
+<body>
+	<!-- start of homepage loader -->
+	<div id="loader">
+		<img src="images/loader.png">
+	</div>
+	<!-- end of loader -->
+	
+	<!-- start of angularjs app -->
+	<div ng-app="byjus" ng-controller="course-listing" >
+		
+		<!-- start of of main body -->
+		<div id="body">
+		
+			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" >
+		
+				<!-- First serach box -->
+				<div class="form-group" id="firstList">
+					<label for="repeatSelect"> Search Courses by : </label>
+					<select class="form-control" name="repeatSelectone" id="repeatSelectone" ng-model="selectedDataFirst" ng-change="changeFirstDropDown(selectedDataFirst)" onchange="showList()">
+						<option ng-repeat="option in availabelSearchOptions" value="{{option.id}}">{{option.name}}</option>
+					</select>
+				</div>
+			
+				<!-- Second search box -->
+				<div class="form-group" id="secondList">
+				<label for="repeatSelect"> Pick your {{selectedDataFirst}} : </label>
+					<select class="form-control" name="repeatSelecttwo" id="repeatSelecttwo" ng-model="selectedDataSecond" ng-change="changeSecondDropDown(selectedDataSecond)" onchange="showTable()" placeholder="Hello">
+						<option ng-repeat="option in secondDropdownList track by $index " value="{{option}}" >{{option}}</option>
+					</select>
+				</div>
+			
+				<div class="" id="features">
+				
+					<!-- Search box for Filter -->
+					<br><input type="text" class="form-control" placeholder="Filter by Child Subject" name="search" ng-model="search['Child Subject']"><br>
+					
+					<!-- div for ordering data -->
+					<div class="form-group">
+						<label for="sel1">Sort By : </label>
+						<select class="form-control" id="sort" ng-model="sort" ng-change="setOrder(sort)">
+							<option  value="Date">Next Session Date</option>
+							<option  value="Length">Length</option>
+						</select>
+					</div>
+					
+					<!-- Number of Search Result -->
+					<label>Result found : {{dataLength}} </label>
+				</div>
+			</div>	
+				<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8" style="overflow-y: scroll; height : 95vh" >
+					<div class="courseDetails"  ng-repeat="data in modifiedData |  orderBy: order_type | filter: search">
+					
+						<!-- Conditions for image based on Provider -->
+						<div ng-if="data.Provider == 'Udacity'" class="col-xs-12 col-sm-5 col-md-4 col-lg-4" style="overflow: hidden">
+							<img src="images/udacity.jpg">
+						</div>
+						<div ng-if="data.Provider == 'Udemy'" class="col-xs-12 col-sm-5 col-md-4 col-lg-4" style="overflow: hidden">
+							<img src="images/udemy.jpg">
+						</div>
+						<div ng-if="data.Provider == 'edX'" class="col-xs-12 col-sm-5 col-md-4 col-lg-4" style="overflow: hidden">
+							<img src="images/edx.png">
+						</div>
+						<div ng-if="data.Provider == 'Coursera'" class="col-xs-12 col-sm-5 col-md-4 col-lg-4" style="overflow: hidden">
+							<img src="images/coursera.jpg">
+						</div>
+						<div ng-if="data.Provider == 'Canvas.net'" class="col-xs-12 col-sm-5 col-md-4 col-lg-4" style="overflow: hidden">
+							<img src="images/canvas.jpg">
+						</div>
+						<div ng-if="data.Provider == 'FutureLearn'" class="col-xs-12 col-sm-5 col-md-4 col-lg-4" style="overflow: hidden">
+							<img src="images/futurelearn.jpg">
+						</div>
+						<div ng-if="data.Provider != 'Udacity' && data.Provider != 'Udemy' && data.Provider != 'edX'&& data.Provider != 'Coursera' && data.Provider != 'FutureLearn' && data.Provider != 'Canvas.net' " class="col-xs-12 col-sm-5 col-md-4 col-lg-4" style="overflow: hidden">
+							<img src="images/course.jpg">
+						</div>
+						<!-- end of conditions -->
+						
+						<!-- Courses Data -->
+						<div class="courseInfo col-xs-12 col-sm-7 col-md-8 col-lg-8">
+							<h4><strong>{{data["Course Name"]}}<strong><h4>
+							<p>{{data["Provider"]}}, {{data.Universities.Institutions}}</p>
+							<p>{{data["Next Session Date"]}} , Length : {{data["Length"]}}</p>
+							<p>{{data["Parent Subject"]}} ( {{data["Child Subject"]}} )</p>
+							<p>Url : {{data["Url"]}}</p>
+						
+						</div>
+						<hr class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+					</div>
+				</div>
+			
+			
+		</div>
+	</div>
+
+<script src="js/main.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
